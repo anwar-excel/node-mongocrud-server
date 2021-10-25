@@ -17,19 +17,36 @@ async function run() {
     try {
         await client.connect();
         const database = client.db("foodMaster");
-        // Specifying a Schema is optional, but it enables type hints on
-        // finds and inserts
-        const users = database.collection < users > ("users");
-        const result = await users.insertOne({
-            name: "special",
-            email: "special@gmail.com",
-        });
+        const users = database.collection("users");
+        // create a document to insert
+        const doc = {
+            name: "Record of a Shriveled Datum",
+            email: "aar@gmail.com",
+        }
+        const result = await users.insertOne(doc);
         console.log(`A document was inserted with the _id: ${result.insertedId}`);
     } finally {
         await client.close();
     }
 }
 run().catch(console.dir);
+// async function run() {
+//     try {
+//         await client.connect();
+//         const database = client.db("foodMaster");
+//         // Specifying a Schema is optional, but it enables type hints on
+//         // finds and inserts
+//         const users = database.collection < users > ("users");
+//         const result = await users.insertOne({
+//             title: "Record of a Shriveled Datum",
+//             content: "No bytes, no problem. Just insert a document, in MongoDB",
+//         });
+//         console.log(`A document was inserted with the _id: ${result.insertedId}`);
+//     } finally {
+//         await client.close();
+//     }
+// }
+// run().catch(console.dir);
 // client.connect(err => {
 //     const collection = client.db("foodMaster").collection("users");
 //     // perform actions on the collection object
